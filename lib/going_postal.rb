@@ -123,23 +123,14 @@ module GoingPostal
   # trailing whitespace.
   # 
   # Ireland (IE) has no postcodes, so nil will always be returned.
+  #
+  # The magig ist done calling a formating method for each country. If no such
+  # method exists a default method is called stripping the leading and trailing
+  # whitespace.
   # 
   def format_postcode(*args)
     string, country_code = get_args_for_format_postcode(args)
-    case country_code.to_s.upcase
-    when "GB", "UK"
-      format_gb_postcode(string)
-    when "US", "USA"
-      format_us_zipcode(string)
-    when "CA"
-      format_ca_postcode(string)
-    when "AU", "NZ", "ZA"
-      format_au_postcode(string)
-    when "IE"
-      nil
-    else
-      string.to_s.strip
-    end
+    self.__send__("format_#{country_code.to_s.downcase}_postcode", string)
   end
   alias format_post_code format_postcode
   alias format_zip format_postcode
@@ -147,6 +138,24 @@ module GoingPostal
   alias format_zip_code format_postcode
   
   # :stopdoc:
+  
+  FORMAT_QUERY_REGEX = /^format_[a-zA-Z]{2}_postcode$/i
+  def method_missing(meth, *args, &block)
+    if FORMAT_QUERY_REGEX.match meth.to_s
+      self.class.class_eval <<-end_eval
+      def #{meth}(value)
+        value.to_s.strip
+      end
+      end_eval
+      self.__send__(meth, *args, &block)
+    else
+      super
+    end
+  end
+  
+  def format_ie_postcode(string)
+    nil
+  end
   
   def format_gb_postcode(string)
     out_code = string.to_s.upcase.delete(" \t\r\n")
