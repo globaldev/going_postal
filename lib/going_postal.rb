@@ -66,13 +66,10 @@ module GoingPostal
   # 
   def postcode?(*args)
     string, country_code = get_args_for_format_postcode(args)
-    case country_code.to_s.upcase
-    when "GB", "UK", "US", "USA", "CA", "AU", "NZ", "ZA"
-      format_postcode(string, country_code) || false
-    when "IE"
+    if country_code.to_s.upcase == "IE"
       string.nil? || string.to_s.empty? ? "" : false
     else
-      format_postcode(string, country_code)
+      format_postcode(string, country_code) || false
     end
   end
   alias post_code? postcode?
