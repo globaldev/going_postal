@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "going_postal"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
   s.summary = "Global post/zip code formatting and validation mixin"
   s.description = "Post/zip code formatting and validation for the UK, US, CA and more."
   s.files = %W{lib}.map {|dir| Dir["#{dir}/**/*.rb"]}.flatten << "README.rdoc"
