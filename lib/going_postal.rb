@@ -130,7 +130,8 @@ module GoingPostal
   # 
   def format_postcode(*args)
     string, country_code = get_args_for_format_postcode(args)
-    self.__send__("format_#{country_code.to_s.downcase}_postcode", string)
+    method = :"format_#{country_code.to_s.downcase}_postcode"
+    respond_to?(method) ? __send__(method, string) : string.to_s.strip
   end
   alias format_post_code format_postcode
   alias format_zip format_postcode
@@ -138,20 +139,6 @@ module GoingPostal
   alias format_zip_code format_postcode
   
   # :stopdoc:
-  
-  FORMAT_QUERY_REGEX = /^format_[a-zA-Z]{2}_postcode$/i
-  def method_missing(meth, *args, &block)
-    if FORMAT_QUERY_REGEX.match meth.to_s
-      self.class.class_eval <<-end_eval
-      def #{meth}(value)
-        value.to_s.strip
-      end
-      end_eval
-      self.__send__(meth, *args, &block)
-    else
-      super
-    end
-  end
   
   def format_ie_postcode(string)
     nil
