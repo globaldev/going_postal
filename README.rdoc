@@ -1,7 +1,8 @@
 = GoingPostal
 
 The GoingPostal mixin provides classes with postcode formatting and validation
-methods.
+methods.  It does _not_ provide external verification methods such as checking
+for the existence of a postcode against the UK PAF database.
 
 == Installation
 
