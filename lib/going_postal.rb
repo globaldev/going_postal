@@ -31,7 +31,8 @@
 #   GoingPostal.postcode?("200378001", "US")   #=> "20037-8001"
 # 
 # Currently supported countries are United Kingdom (GB, UK), United States (US),
-# Canada (CA), Australia (AU), New Zeland (NZ), and South Africa (ZA).
+# Canada (CA), Australia (AU), New Zeland (NZ), South Africa (ZA), and
+# The Netherlands (NL).
 # 
 # Ireland (IE) is supported insomuch as, Ireland doesn't use postcodes, so "" or
 # nil are considered valid.
@@ -180,6 +181,11 @@ module GoingPostal
   def format_ch_postcode(string)
     string = string.to_s.delete(" \t\r\n")
     string if string =~ /^[1-9][0-9]{3}$/
+  end
+  
+  def format_nl_postcode(string)
+    string = string.to_s.delete(" \t\r\n")
+    string if string =~ /^[0-9]{4}\s?[A-Z]{2}$/
   end
   
   private
