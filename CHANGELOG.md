@@ -1,4 +1,4 @@
-## dev
+## 0.1.2 - January 28, 2013
 
 - Support for the Netherlands ([@dreamr][])
 
