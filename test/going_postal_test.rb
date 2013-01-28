@@ -308,11 +308,22 @@ class GoingPostalTest < MiniTest::Unit::TestCase
     refute(GoingPostal.postcode?("abcd", "CH"))
   end
   
+  def test_nl_format_postcode
+    assert_equal("1234 AB", GoingPostal.format_postcode("1234 AB", "NL"))
+    assert_equal("1234 AB", GoingPostal.format_postcode("1234ab", "NL"))
+    
+    assert_nil(GoingPostal.format_postcode("1230", "NL"))
+    assert_nil(GoingPostal.format_postcode("0123 AB", "NL"))
+    assert_nil(GoingPostal.format_postcode("12345", "NL"))
+    assert_nil(GoingPostal.format_postcode("abcd", "NL"))
+  end
+  
   def test_nl_postcode_query
-    assert(GoingPostal.postcode?("1000 AA", "NL"))
-    assert(GoingPostal.postcode?("1000AD", "NL"))
+    assert(GoingPostal.postcode?("1234 AB", "NL"))
+    assert(GoingPostal.postcode?("1234ab", "NL"))
     
     refute(GoingPostal.postcode?("1230", "NL"))
+    refute(GoingPostal.postcode?("0123 AB", "NL"))
     refute(GoingPostal.postcode?("12345", "NL"))
     refute(GoingPostal.postcode?("abcd", "NL"))
   end
