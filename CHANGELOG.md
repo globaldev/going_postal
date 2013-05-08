@@ -1,3 +1,7 @@
+## 0.1.3 - May 8, 2013
+
+- bugfix for Netherlands support ([@matsadler][]) (reported by [@evansd][])
+
 ## 0.1.2 - January 28, 2013
 
 - Support for the Netherlands ([@dreamr][])
@@ -15,3 +19,5 @@
 
 [@matsadler]: https://github.com/matsadler
 [@corvus-ch]: https://github.com/corvus-ch
+[@dreamr]: https://github.com/dreamr
+[@evansd]: https://github.com/evansd
