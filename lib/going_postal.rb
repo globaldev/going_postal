@@ -185,7 +185,7 @@ module GoingPostal
   
   def format_nl_postcode(string)
     string = string.to_s.upcase.delete(" \t\r\n")
-    string.insert(4, " ")
+    string.insert(4, " ") if string.length >= 4
     string if string =~ /^[1-9][0-9]{3} (S[BCE-RT-Z]|[A-RT-Z][A-Z])$/
   end
   
