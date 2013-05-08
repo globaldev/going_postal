@@ -326,6 +326,7 @@ class GoingPostalTest < MiniTest::Unit::TestCase
     refute(GoingPostal.postcode?("0123 AB", "NL"))
     refute(GoingPostal.postcode?("12345", "NL"))
     refute(GoingPostal.postcode?("abcd", "NL"))
+    refute(GoingPostal.postcode?("1", "NL"))
   end
   
   def test_unknown_country_format_postcode_strips_whitespace
