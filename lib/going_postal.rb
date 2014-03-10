@@ -188,6 +188,11 @@ module GoingPostal
     string.insert(4, " ") if string.length >= 4
     string if string =~ /^[1-9][0-9]{3} (S[BCE-RT-Z]|[A-RT-Z][A-Z])$/
   end
+
+  def format_pl_postcode(string)
+    match = /^(\d\d)[^\w]*(\d\d\d)$/.match(string)
+    match.captures.join("-") if match && match[1] && match[2]
+  end
   
   private
   
