@@ -1,3 +1,7 @@
+## 0.1.4 - March 12, 2014
+
+- Support for Poland ([@kurie][])
+
 ## 0.1.3 - May 8, 2013
 
 - bugfix for Netherlands support ([@matsadler][]) (reported by [@evansd][])
@@ -21,3 +25,4 @@
 [@corvus-ch]: https://github.com/corvus-ch
 [@dreamr]: https://github.com/dreamr
 [@evansd]: https://github.com/evansd
+[@kurie]: https://github.com/kurie
