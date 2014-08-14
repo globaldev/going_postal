@@ -1,0 +1,14 @@
+PATH
+  remote: .
+  specs:
+    going_postal (0.1.4)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  going_postal!
