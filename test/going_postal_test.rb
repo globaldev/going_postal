@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require "minitest/autorun"
 require File.expand_path("../../lib/going_postal", __FILE__)
 
