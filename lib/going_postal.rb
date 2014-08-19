@@ -182,7 +182,23 @@ module GoingPostal
     string = string.to_s.delete(" \t\r\n")
     string if string =~ /^[1-9][0-9]{3}$/
   end
+
+  def format_dk_postcode(string)
+    format_ch_postcode(string)
+  end
   
+  def format_be_postcode(string)
+    format_ch_postcode(string)
+  end
+
+  def format_lu_postcode(string)
+    format_ch_postcode(string)
+  end
+
+  def format_at_postcode(string)
+    format_ch_postcode(string)
+  end
+
   def format_nl_postcode(string)
     string = string.to_s.upcase.delete(" \t\r\n")
     string.insert(4, " ") if string.length >= 4
@@ -192,6 +208,25 @@ module GoingPostal
   def format_pl_postcode(string)
     match = /^(\d\d)[^\w]*(\d\d\d)$/.match(string)
     match.captures.join("-") if match && match[1] && match[2]
+  end
+
+  def format_de_postcode(string)
+    string = string.to_s.upcase.delete(" \t\r\n")
+    string if string =~ /^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$/
+  end
+
+  def format_se_postcode(string)
+    string = string.to_s.upcase.delete(" \t\r\n")
+    string if string =~ /^[1-9]{1}[0-9]{4}$/
+  end
+
+  def format_no_postcode(string)
+    string = string.to_s.upcase.delete(" \t\r\n")
+    string if string =~ /^[0-9]{4}$/
+  end
+
+  def format_fr_postcode(string)
+    format_de_postcode(string)
   end
   
   private
