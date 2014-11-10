@@ -275,10 +275,13 @@ class GoingPostalTest < MiniTest::Unit::TestCase
     refute(GoingPostal.postcode?("abcd", "ZA"))
   end
   
-  def test_ie_format_postcode # Ireland doesn't have postcodes
+  def test_non_required_format_postcode # Countries that don't have postcodes
     assert_nil(GoingPostal.format_postcode("A9A 9AA", "IE"))
     assert_nil(GoingPostal.format_postcode("12345", "IE"))
     assert_nil(GoingPostal.format_postcode("1234", "IE"))
+    assert_nil(GoingPostal.format_postcode("1234", "AO"))
+    assert_nil(GoingPostal.format_postcode("1234", "AG"))
+    assert_nil(GoingPostal.format_postcode("1234", "ST"))
   end
   
   def test_ie_postcode_query
