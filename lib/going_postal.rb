@@ -34,13 +34,106 @@
 # Canada (CA), Australia (AU), New Zeland (NZ), South Africa (ZA), and
 # The Netherlands (NL).
 # 
-# Ireland (IE) is supported insomuch as, Ireland doesn't use postcodes, so "" or
-# nil are considered valid.
+# Ireland (IE) as well as 60+ other countries that do not use postcodes
+# - see GoingPostal::COUNTRIES_WITHOUT_POSTCODES - are supported insomuch as,
+# these countires don't use postcodes, so "" or nil are considered valid.
 # 
 # Currently unsupported countries will be formatted by simply stripping leading
 # and trailing whitespace, and any input will be considered valid.
 # 
+
+require "set"
+
 module GoingPostal
+  COUNTRIES_WITHOUT_POSTCODES = Set[
+    "AO", # Angola
+    "AG", # Antigua and Barbuda
+    "AN", # Netherlands Antilles
+    "AW", # Aruba
+    "BS", # Bahamas
+    "BZ", # Belize
+    "BJ", # Benin
+    "BW", # Botswana
+    "BF", # Burkina Faso
+    "BI", # Burundi
+    "CI", # Côte d’Ivoire
+    "CD", # Congo, the Democratic Republic of the
+    "CG", # Congo (Brazzaville)
+    "CM", # Cameroon
+    "CF", # Central African Republic
+    "CW", # Curaçao
+    "KM", # Comoros
+    "CK", # Cook Islands
+    "DJ", # Djibouti
+    "DM", # Dominica
+    "GQ", # Equatorial Guinea
+    "ER", # Eritrea
+    "FJ", # Fiji
+    "GM", # Gambia
+    "GH", # Ghana
+    "GD", # Grenada
+    "GN", # Guinea
+    "GY", # Guyana
+    "HK", # Hong Kong
+    "IE", # Ireland
+    "KI", # Kiribati
+    "KP", # North Korea
+    "MO", # Macau
+    "MW", # Malawi
+    "ML", # Mali
+    "MR", # Mauritania
+    "MU", # Mauritius
+    "MS", # Montserrat
+    "NA", # Namibia
+    "NR", # Nauru
+    "NU", # Niue
+    "PA", # Panama
+    "QA", # Qatar
+    "RW", # Rwanda
+    "KN", # Saint Kitts and Nevis
+    "LC", # Saint Lucia
+    "ST", # Sao Tome and Principe
+    "SC", # Seychelles
+    "SL", # Sierra Leone
+    "SB", # Solomon Islands
+    "SO", # Somalia
+    "SR", # Suriname
+    "SX", # Sint Maarten
+    "SY", # Syria
+    "TF", # French Southern and Antarctic Territories
+    "TK", # Tokelau
+    "TL", # East Timor
+    "TO", # Tonga
+    "TT", # Trinidad and Tobago
+    "TV", # Tuvalu
+    "TZ", # Tanzania
+    "UG", # Uganda
+    "AE", # United Arab Emirates
+    "VU", # Vanuatu
+    "YE", # Yemen
+    "ZW"  # Zimbabwe
+  ]
+  
+  # :section: Checking Postcode Requirements
+  
+  # :call-seq: GoingPostal.not_required?(country_code) -> bool
+  # 
+  # Returns true if the country spcified by the two letter country code
+  # country_code argument does not require postcodes, false otherwise.
+  # 
+  def self.not_required?(country_code)
+    COUNTRIES_WITHOUT_POSTCODES.include?(country_code.to_s.upcase)
+  end
+  
+  # :call-seq: GoingPostal.not_required?(country_code) -> bool
+  # 
+  # Returns true if the country spcified by the two letter country code
+  # country_code argument requires postcodes, false otherwise.
+  # 
+  def self.required?(country_code)
+    !not_required?(country_code)
+  end
+  
   extend self
   
   # :section: Validation
@@ -62,12 +155,12 @@ module GoingPostal
   # Postcodes for unknown countries will always be considered valid, the return
   # value will consist of the input stripped of leading and trailing whitespace.
   # 
-  # Ireland (IE) has no postcodes, "" will be returned from in input of "" or
+  # For countries without postcodes, "" will be returned from in input of "" or
   # nil, false otherwise.
   # 
   def postcode?(*args)
     string, country_code = get_args_for_format_postcode(args)
-    if country_code.to_s.upcase == "IE"
+    if GoingPostal.not_required?(country_code)
       string.nil? || string.to_s.empty? ? "" : false
     else
       format_postcode(string, country_code) || false
@@ -120,7 +213,7 @@ module GoingPostal
   # Postcodes for unknown countries will simply be stripped of leading and
   # trailing whitespace.
   # 
-  # Ireland (IE) has no postcodes, so nil will always be returned.
+  # Countries without postcodes will always return nil.
   #--
   # The magic is done calling a formatting method for each country. If no such
   # method exists a default method is called stripping the leading and trailing
@@ -128,7 +221,11 @@ module GoingPostal
   #++
   def format_postcode(*args)
     string, country_code = get_args_for_format_postcode(args)
-    method = :"format_#{country_code.to_s.downcase}_postcode"
+    method = if GoingPostal.not_required?(country_code)
+      :format_non_postcode
+    else
+      :"format_#{country_code.to_s.downcase}_postcode"
+    end
     respond_to?(method) ? __send__(method, string) : string.to_s.strip
   end
   alias format_post_code format_postcode
@@ -138,9 +235,11 @@ module GoingPostal
   
   # :stopdoc:
   
-  def format_ie_postcode(string)
+  def format_non_postcode(string)
     nil
   end
+  # backwards compatibility, no need to alias other non-postcode countries
+  alias format_ie_postcode format_non_postcode
   
   def format_gb_postcode(string)
     out_code = string.to_s.upcase.delete(" \t\r\n")
