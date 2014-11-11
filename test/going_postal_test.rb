@@ -5,6 +5,16 @@ require File.expand_path("../../lib/going_postal", __FILE__)
 
 class GoingPostalTest < MiniTest::Unit::TestCase
   
+  def test_required
+    assert(GoingPostal.required?("GB"))
+    refute(GoingPostal.required?("IE"))
+  end
+  
+  def test_not_required
+    refute(GoingPostal.not_required?("GB"))
+    assert(GoingPostal.not_required?("IE"))
+  end
+  
   def test_default_country_code_as_mixin
     gb = Object.new
     class << gb
