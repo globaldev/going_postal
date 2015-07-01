@@ -53,11 +53,23 @@ valid? is also available directly on the GoingPostal module.
 format_postcode is aliased as format_post_code, format_zip, format_zipcode, and
 format_zip_code.
 
+== Contributing
+
+Contributions are gladly accepted via pull request. When adding new countries
+or changing existing logic, please keep the following rules in mind for how the
+formatter / validator should work:
+
+* reject something that clearly isn't a postcode;
+* reject as much as possible as can be done with a simple format check;
+* do not coerce something that may not be a postcode in to a postcode;
+* accept badly formatted postcodes (eg wrong case, misplaced spaces/separators);
+* accept everything that is a postcode.
+
 == Licence
 
 (The MIT License)
 
-Copyright (c) 2011,2012,2013 Global Personals, Ltd.
+Copyright (c) Global Personals, Ltd.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
