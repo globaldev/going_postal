@@ -30,9 +30,10 @@
 #   GoingPostal.postcode?("sl41eg", "GB")      #=> "SL4 1EG"
 #   GoingPostal.postcode?("200378001", "US")   #=> "20037-8001"
 # 
-# Currently supported countries are United Kingdom (GB, UK), United States (US),
-# Canada (CA), Australia (AU), New Zeland (NZ), South Africa (ZA), and
-# The Netherlands (NL).
+# Currently supported countries are United Kingdom (GB, UK), United States
+# (US), Canada (CA), Australia (AU), New Zeland (NZ), South Africa (ZA), The
+# Netherlands (NL), Sweden (SE), Belgium (BE), Austria (AT), Norway (NO),
+# Germany (DE), Luxembourg (LU), Denmark (DE) and France (FR).
 # 
 # Ireland (IE) as well as 60+ other countries that do not use postcodes
 # - see GoingPostal::COUNTRIES_WITHOUT_POSTCODES - are supported insomuch as,
