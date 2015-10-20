@@ -329,6 +329,11 @@ module GoingPostal
     format_de_postcode(string)
   end
   
+  def format_ro_postcode(string)
+    string = string.to_s.gsub(/\D/, '')
+    string if string =~ /^[0-9]{6}$/
+  end
+
   private
   
   def get_args_for_format_postcode(args)
