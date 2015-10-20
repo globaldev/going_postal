@@ -330,7 +330,7 @@ module GoingPostal
   end
   
   def format_ro_postcode(string)
-    string = string.to_s.gsub(/\D/, '')
+    string = string.to_s.upcase.delete(" \t\r\n")
     string if string =~ /^[0-9]{6}$/
   end
 
