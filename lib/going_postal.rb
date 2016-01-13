@@ -33,7 +33,7 @@
 # Currently supported countries are United Kingdom (GB, UK), United States
 # (US), Canada (CA), Australia (AU), New Zeland (NZ), South Africa (ZA), The
 # Netherlands (NL), Sweden (SE), Belgium (BE), Austria (AT), Norway (NO),
-# Germany (DE), Luxembourg (LU), Denmark (DE) and France (FR).
+# Germany (DE), Luxembourg (LU), Denmark (DE), France (FR) and Romania (RO).
 # 
 # Ireland (IE) as well as 60+ other countries that do not use postcodes
 # - see GoingPostal::COUNTRIES_WITHOUT_POSTCODES - are supported insomuch as,
@@ -329,6 +329,11 @@ module GoingPostal
     format_de_postcode(string)
   end
   
+  def format_ro_postcode(string)
+    string = string.to_s.delete(" \t\r\n")
+    string if string =~ /^[0-9]{6}$/
+  end
+
   private
   
   def get_args_for_format_postcode(args)
